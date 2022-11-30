@@ -1,0 +1,27 @@
+Very similar to - https://github.com/varun442/DSA-Leetcode-Solutions/blob/main/Search%20in%20Infinite%20Array%20(BS)
+
+Combination of two diffrent problems -> Index of an element in infinite array + first occurence of an element 
+
+findElement(inr arr[], int key){
+  int low=0;
+  int high=1;
+  while(key<arr[high]){
+    low=high;
+    high=high*2;
+  }
+  return firstOccurenceUsingBinarySearch(arr[], key, low, high)
+}
+
+Referred link: https://www.youtube.com/watch?v=zr_AoTxzn0Y&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=6
+
+int firstOccurenceUsingBinarySearch(int arr[], int key, int low, int high){
+  int mid = (low+high)/2;
+  int res=-1;
+  if(a[mid] == key){
+    res=mid;
+    high=mid-1;
+  }else{
+    low=mid+1;
+  }
+  return res;
+}
