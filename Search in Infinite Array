@@ -1,0 +1,21 @@
+Here we cannot index the high index so we start the higher index at 1 and lower at 0 to create a bound.
+Increase the higher by twice till we get the desired high index and perform binary search within the low and high bound.
+Desired means -> key > arr[high]
+
+Referred links:
+https://afteracademy.com/blog/search-an-element-in-a-sorted-and-infinite-array/
+https://www.youtube.com/watch?v=FzvK5uuaki8&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=13
+
+fineElemen(inr arr[], int key){
+  int low=0;
+  int high=1;
+  
+  while(key<arr[high]){
+    low=high;
+    high=high*2;
+  }
+  
+  return binarySearch(arr[], key, low, high)
+}
+
+
