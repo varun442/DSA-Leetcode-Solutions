@@ -1,0 +1,55 @@
+https://www.youtube.com/watch?v=2JSQIhPcHQg&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=21
+
+class Solution 
+{
+    //Function to find minimum number of pages.
+    public static int findPages(int[]A,int N,int M)
+    {
+        int max=A[0];
+        for(int i=0;i<N;i++){
+            if(A[i] > max)
+                max=A[i];
+        }
+        int low=max;
+        int sumOfPages = 0;
+        for(int i=0;i<N;i++){
+            sumOfPages=sumOfPages+A[i];
+        }
+        int high=sumOfPages;
+        //System.out.println(low+" "+high);
+        int res=-1;
+        
+        
+        if(M>N){
+            return -1;
+        }
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            //System.out.println("MID" + mid);
+            if(isValid(mid, A, low, high, M) == true){
+                res=mid;
+                //System.out.println("Result" + res);
+                high=mid-1;
+            }else{
+                low=mid+1;
+            }
+        }
+     return res;   
+    }
+    
+    static boolean isValid(int mid, int A[], int low, int high, int M){
+        int studentCount=1;
+        int currSum=0;
+        for(int i=0;i<A.length;i++){
+            currSum=currSum+A[i];
+            if(currSum > mid){
+                studentCount++;
+                currSum=A[i];
+            }
+            if(studentCount > M){
+                return false;
+            }
+        }
+        return true;
+    }
+};
