@@ -1,0 +1,47 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int max=weights[0];
+        for(int i=0;i<weights.length;i++){
+            if(weights[i] > max)
+                max=weights[i];
+        }
+        int low=max;
+        int totalWeights = 0;
+        for(int i=0;i<weights.length;i++){
+            totalWeights=totalWeights+weights[i];
+        }
+        int high=totalWeights;
+        //System.out.println(low+" "+high);
+        int res=-1;
+        
+    
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            //System.out.println("MID" + mid);
+            if(isValid(mid, weights, low, high, days) == true){
+                res=mid;
+                //System.out.println("Result" + res);
+                high=mid-1;
+            }else{
+                low=mid+1;
+            }
+        }
+     return res;   
+    }
+    
+    static boolean isValid(int mid, int weights[], int low, int high, int days){
+        int daysCount=1;
+        int currCount=0;
+        for(int i=0;i<weights.length;i++){
+            currCount=currCount+weights[i];
+            if(currCount > mid){
+                daysCount++;
+                currCount=weights[i];
+            }
+            if(daysCount > days){
+                return false;
+            }
+        }
+        return true;
+    }
+}
