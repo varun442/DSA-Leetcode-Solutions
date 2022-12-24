@@ -1,0 +1,58 @@
+O(n*n)- doesnt work for bigger values on S.length()
+
+public int smallestSubstring(String S) {
+        int len=Integer.MAX_VALUE;
+        char[] ch=S.toCharArray();
+        
+        for(int i=0;i<S.length();i++){
+            HashSet<Character> set=new HashSet<>();
+            for(int j=i;j<S.length();j++){
+                set.add(ch[j]);
+                if(set.size()==3){
+                    len=Math.min(len, j-i+1);
+                    //System.out.println(len);
+                    break;
+                    }   
+                }
+                set.clear();
+            }
+        int res = (len==Integer.MAX_VALUE)? -1:len;
+        return res;
+    }
+
+O(n)
+public static int smallestSubstring(String S)
+	{
+		int res = Integer.MAX_VALUE;
+
+		// To check 0, 1 and 2
+		boolean zero = false, one = false, two = false;
+
+		// To store indexes of 0, 1 and 2
+		int zeroindex = 0, oneindex = 0, twoindex = 0;
+		for (int i = 0; i < S.length(); i++) {
+			if (S.charAt(i) == '0') {
+				zero = true;
+				zeroindex = i;
+			}
+			else if (S.charAt(i) == '1') {
+				one = true;
+				oneindex = i;
+			}
+			else if (S.charAt(i) == '2') {
+				two = true;
+				twoindex = i;
+			}
+
+			// Calculating length
+			if (zero && one && two)
+				res = Math.min( res,
+					Math.max(zeroindex,Math.max(oneindex, twoindex))
+				- Math.min( zeroindex,Math.min(oneindex, twoindex)));
+		}
+
+		// In case if there is no substring that contains 0,1 and 2
+		if (res == Integer.MAX_VALUE)
+			return -1;
+		return res + 1;
+	}
