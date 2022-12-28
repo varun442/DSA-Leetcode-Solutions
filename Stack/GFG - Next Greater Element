@@ -1,0 +1,60 @@
+O(n*n) - Time Limit Exceeds
+public static long[] nextLargerElement(long[] arr, int n)
+    { 
+        long[] p=new long[n];
+        int k=0;
+        if(n==1){
+            p[k]=-1;
+            return p;
+        }
+        for(int i=0;i<n-1;i++){
+            for(int j=i+1;j<n;j++){
+                if(arr[j]>arr[i]){
+                    p[k]=arr[j];
+                    break;
+                }else{
+                    p[k]=-1;
+                }
+            }
+            k++;
+        }
+        p[k]=-1;
+        return p;
+    } 
+
+
+O(n) - Single Traversal - Using Stack
+public static long[] nextLargerElement(long[] arr, int n)
+    {   
+        long[] p=new long[n];
+        if(n==1){
+            p[0]=-1;
+            return p;
+        }
+        int k=n-1;
+        Stack<Long> stack=new Stack<>();
+        for(int i=n-1;i>=0;i--){
+            if(stack.empty()){
+                p[k]=-1;
+                k--;
+                stack.push(arr[i]);
+            }else if(stack.size()>0 && stack.peek()>arr[i]){
+                p[k]=stack.peek();k--;
+                stack.push(arr[i]);
+            }else if(stack.peek()<=arr[i]){
+                while(stack.size()>0 && stack.peek()<=arr[i]){
+                    stack.pop();
+                }
+                if(stack.empty()){
+                    p[k]=-1;
+                }else{
+                    p[k]=stack.peek();
+                }
+                stack.push(arr[i]);  k--;
+            }
+        }
+        return p;
+    } 
+}
+
+
