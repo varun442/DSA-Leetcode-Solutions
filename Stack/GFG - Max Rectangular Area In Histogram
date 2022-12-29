@@ -1,0 +1,83 @@
+I Brute Force
+
+O(n*n) O(1)
+
+Find the max of areas of all posssible rectangles 
+
+public static long getMaxArea(long hist[], long n) 
+    {
+        long maxArea=-1;
+        long minHeight=Long.MAX_VALUE;
+        
+        for(int i=0;i<n;i++){
+            maxArea=Math.max(maxArea, hist[i]);
+            minHeight=hist[i];
+            for(int j=i-1;j>=0;j--){
+                minHeight=Math.min(minHeight, hist[j]);
+                long width=i-j+1;
+                maxArea=Math.max(maxArea, width*minHeight);
+            }
+        }
+        return maxArea;
+    }
+
+II Using Stacks
+
+O(n), O(n)
+
+public static long getMaxArea(long hist[], long n) {
+        if(n==1) return 1;
+        long[] left=leftArray(hist,n);
+        long[] right=rightArray(hist,n);
+        long maxArea = 0;
+
+        for(int i=0;i<n;i++){
+            long area=hist[i]*(right[i]-left[i]-1);
+            maxArea=Math.max(maxArea, area);
+        }
+        return maxArea;
+    }
+    
+    private static long[] leftArray(long hist[],long n){
+        long[] temp=new long[hist.length];
+        int k=0;
+        Stack<Integer> stack1=new Stack<>();
+        for(int i=0;i<n;i++){
+            while(stack1.size()>0 && hist[stack1.peek()]>=hist[i]){
+                stack1.pop();
+            }
+            
+            if(!stack1.empty()){
+                temp[k++]=stack1.peek();
+            }else{
+                temp[k++]=-1;;
+            }
+            stack1.push(i);
+        }
+        return temp;
+    }
+    
+    private static long[] rightArray(long hist[],long n){
+        long[] temp1=new long[hist.length];
+        int k=hist.length-1;
+        Stack<Integer> stack2=new Stack<>();
+        for(int i=hist.length-1;i>=0;i--){
+            while(stack2.size()>0 && hist[stack2.peek()]>=hist[i]){
+                stack2.pop();
+            }
+            if(!stack2.empty()){
+                temp1[k--]=stack2.peek();
+            }else{
+                temp1[k--]=n;
+            }
+            stack2.push(i);
+        }
+        
+        
+        return temp1;
+    }
+    
+    
+    
+    
+    
