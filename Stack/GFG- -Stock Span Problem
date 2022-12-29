@@ -1,0 +1,47 @@
+o(n*n) o(n)
+TLE for higher inputs
+
+public static int[] calculateSpan(int price[], int n)
+    {   
+        int p[]=new int[n];
+        if(n==1){
+            p[0]=1;
+            return p;   
+        }
+        p[0]=1;
+        for(int i=1;i<n;i++){
+            p[i]=1;
+            
+            for (int j = i - 1; (j >= 0) && (price[i] >= price[j]) ; j--){
+                p[i]++;       
+            }
+        }
+        return p;
+    }
+    
+    
+ o(n) o(n)
+ Using stack
+ 
+ public static int[] calculateSpan(int price[], int n)
+    {   
+        int p[]=new int[n];
+        if(n==1){
+            p[0]=1;
+            return p;   
+        }
+        int k=0;
+        Stack<Integer> stack=new Stack<>();    
+        for(int i=0;i<n;i++){
+            while(!stack.empty() && price[stack.peek()] <= price[i]){
+                stack.pop();
+            }
+            if(!stack.empty()){
+                p[k++]=i-stack.peek();
+            }else{
+                p[k++]=i+1;
+            }
+            stack.push(i);
+        }
+    return p;
+    }
